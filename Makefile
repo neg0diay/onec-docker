@@ -6,6 +6,8 @@ VERSION ?= latest
 
 all: server client thin-client crs
 
+all-my: server crs client client-vnc oscript runner gitsync
+
 server:
 	docker build --build-arg ONEC_USERNAME=${ONEC_USERNAME} \
 		--build-arg ONEC_PASSWORD=${ONEC_PASSWORD} \

@@ -35,5 +35,8 @@ ENV LANG ru_RU.UTF-8
 
 ADD https://github.com/oscript-library/gitsync/releases/download/$gitsync_ver/gitsync.exe /gitsync.exe
 
-ENTRYPOINT ["mono", "gitsync.exe"]
-CMD ["usage"]
+#ENTRYPOINT ["mono", "gitsync.exe"]
+#CMD ["usage"]
+ENTRYPOINT ["/init"]
+#ENTRYPOINT ["/bin/bash"]
+

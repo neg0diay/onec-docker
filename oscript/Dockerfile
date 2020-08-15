@@ -1,11 +1,13 @@
 ARG DOCKER_USERNAME
 ARG ONEC_VERSION
-FROM ${DOCKER_USERNAME}/onec-client:${ONEC_VERSION} as base
+FROM ${DOCKER_USERNAME}/onec-client-vnc:${ONEC_VERSION} as base
 
 FROM mono:5.20-slim
 LABEL maintainer="Anton Kvashenkin <anton.jugatsu@gmail.com> (@jugatsu)"
 
 ARG onescript_ver=1.0.21
+#ARG onescript_ver=1.4.0
+
 
 COPY --from=base /opt /opt
 
@@ -17,6 +19,7 @@ RUN echo "deb http://http.debian.net/debian/ stretch main contrib non-free" > /e
   && echo "deb http://security.debian.org/ stretch/updates main contrib non-free" >> /etc/apt/sources.list \
   && echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections \
   && apt-get update \
+#  && apt-get upgrade \
   && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       ca-certificates \
       curl \
@@ -39,6 +42,8 @@ RUN echo "deb http://http.debian.net/debian/ stretch main contrib non-free" > /e
     /var/cache/debconf \
   && curl -L http://oscript.io/downloads/${onescript_ver//./_}/onescript-engine_"$onescript_ver"_all.deb -o onescript-engine.deb \
   && dpkg -i onescript-engine.deb \
+  && apt-get install -f \
+#  && apt install ./onescript-engine.deb \
   && rm -f onescript-engine.deb \
   && localedef -i ru_RU -c -f UTF-8 -A /usr/share/locale/locale.alias ru_RU.UTF-8
 ENV LANG ru_RU.UTF-8

@@ -23,19 +23,19 @@ services:
     networks:
       - back_net
 
-  web:
-    image: ${DOCKER_USERNAME}/onec-server-ws:${ONEC_VERSION}
-    command: >
-      bash -c "/opt/1C/v8.3/x86_64/webinst -apache24 -wsdir client -dir /var/www/client -connstr 'Srvr=srv;Ref=database;'
-      && /opt/1C/v8.3/x86_64/webinst -apache24 -wsdir api -dir /var/www/api -connstr 'Srvr=srv;Ref=database;usr=site;pwd=pwd'
-      && /usr/sbin/apache2ctl -DFOREGROUND"
-    ports:
-      - "${HTTP_PORT:-80}:80"
-    volumes:
-      - srv_data:/home/usr1cv8/.1cv8
-      - srv_log:/var/log/1C
-    networks:
-      - back_net
+#  web:
+#    image: ${DOCKER_USERNAME}/onec-server-ws:${ONEC_VERSION}
+#    command: >
+#      bash -c "/opt/1C/v8.3/x86_64/webinst -apache24 -wsdir client -dir /var/www/client -connstr 'Srvr=srv;Ref=database;'
+#      && /opt/1C/v8.3/x86_64/webinst -apache24 -wsdir api -dir /var/www/api -connstr 'Srvr=srv;Ref=database;usr=site;pwd=pwd'
+#      && /usr/sbin/apache2ctl -DFOREGROUND"
+#    ports:
+#      - "${HTTP_PORT:-80}:80"
+#    volumes:
+#      - srv_data:/home/usr1cv8/.1cv8
+#      - srv_log:/var/log/1C
+#    networks:
+#      - back_net
 
   repo:
     image: ${DOCKER_USERNAME}/onec-crs:${ONEC_VERSION}
@@ -61,6 +61,7 @@ services:
       - "5900:5900"
     volumes:
       - client_data:/home/usr1cv8/.1cv8
+      - /Users/neg0diay/Documents/projects/1c_configurations_git/features_data/DEV1C-XYZ/build/base:/home/usr1cv8/build/base
       - ./nethasp.ini:/opt/1C/v8.3/x86_64/conf/nethasp.ini
     networks:
       - back_net

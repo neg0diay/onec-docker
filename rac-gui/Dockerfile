@@ -1,6 +1,6 @@
 ARG DOCKER_USERNAME
 ARG ONEC_VERSION
-FROM ${DOCKER_USERNAME}/onec:${ONEC_VERSION}-server
+FROM ${DOCKER_USERNAME}/onec-server:${ONEC_VERSION}
 LABEL maintainer="Anton Kvashenkin <anton.jugatsu@gmail.com> (@jugatsu)"
 
 ARG gui_ver=1.0.1
